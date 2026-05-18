@@ -1,0 +1,181 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --color-primary: #00f0ff;
+  --color-secondary: #ff00ff;
+  --color-accent: #fcee0a;
+  --color-bg: #0a0a12;
+  --color-bg-secondary: #12121f;
+  --color-text: #e0e0ff;
+  --color-glow: rgba(0, 240, 255, 0.6);
+  --color-glass: rgba(0, 240, 255, 0.06);
+  --particle-color: #00f0ff;
+  --scanline-color: #ff00ff;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: 'Rajdhani', sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+body[data-font='display'] .font-theme {
+  font-family: 'Orbitron', sans-serif;
+}
+body[data-font='heist'] .font-theme {
+  font-family: 'Bebas Neue', sans-serif;
+  letter-spacing: 0.15em;
+}
+body[data-font='pirate'] .font-theme {
+  font-family: 'Pirata One', cursive;
+}
+
+::selection {
+  background: var(--color-primary);
+  color: #000;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-primary);
+  border-radius: 3px;
+}
+
+.glass {
+  background: var(--color-glass);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glow-text {
+  text-shadow:
+    0 0 10px var(--color-glow),
+    0 0 20px var(--color-glow),
+    0 0 40px var(--color-glow);
+}
+
+.glow-box {
+  box-shadow:
+    0 0 15px var(--color-glow),
+    inset 0 0 15px rgba(255, 255, 255, 0.03);
+}
+
+.scanlines::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    var(--scanline-color) 2px,
+    var(--scanline-color) 4px
+  );
+  opacity: 0.03;
+  pointer-events: none;
+  z-index: 9998;
+}
+
+.hologram {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 240, 255, 0.1) 0%,
+    rgba(255, 0, 255, 0.1) 50%,
+    rgba(0, 240, 255, 0.1) 100%
+  );
+  animation: hologramShift 3s ease infinite;
+}
+
+@keyframes hologramShift {
+  0%, 100% { filter: hue-rotate(0deg); }
+  50% { filter: hue-rotate(30deg); }
+}
+
+.spotlight {
+  background: radial-gradient(
+    600px circle at var(--mouse-x, 50%) var(--mouse-y, 50%),
+    var(--color-glow),
+    transparent 40%
+  );
+}
+
+.typing-cursor::after {
+  content: '|';
+  animation: blink 1s step-end infinite;
+  color: var(--color-primary);
+}
+
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.mission-card {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.mission-card-inner {
+  transition: transform 0.1s ease-out;
+}
+
+.crt-flicker {
+  animation: crtFlicker 0.1s infinite;
+}
+
+@keyframes crtFlicker {
+  0% { opacity: 0.97; }
+  50% { opacity: 1; }
+  100% { opacity: 0.98; }
+}
+
+.terminal-text {
+  font-family: 'Share Tech Mono', monospace;
+  color: #0f0;
+  text-shadow: 0 0 8px #0f0;
+}
+
+.hack-line {
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid #0f0;
+  animation: typeLine 0.5s steps(40) forwards;
+}
+
+@keyframes typeLine {
+  from { width: 0; }
+  to { width: 100%; }
+}
+
+.neon-border {
+  position: relative;
+}
+.neon-border::before {
+  content: '';
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(45deg, var(--color-primary), var(--color-secondary), var(--color-accent));
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0.5;
+  filter: blur(8px);
+}
